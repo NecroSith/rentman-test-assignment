@@ -3,8 +3,14 @@ import {MultiselectComponent} from "./components/multiselect/multiselect.compone
 import {HeaderComponent} from "./components/header/header.component";
 
 @NgModule({
-   exports: [
-        MultiselectComponent,
+   imports: [
+       MultiselectComponent,
        HeaderComponent
-   ]
+   ],
+    exports: [
+        MultiselectComponent,
+        HeaderComponent
+    ]
 })
+
+export class SharedModule {}
