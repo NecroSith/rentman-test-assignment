@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import {MultiselectComponent} from "./shared/components/multiselect/multiselect.component";
-import {HeaderComponent} from "./shared/components/header/header.component";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subject, takeUntil} from "rxjs";
+import {FiltersService} from "./shared/services/api/filters.service";
+import {StructuredTree} from "./shared/models/multiselect.model";
 
 @Component({
   selector: 'rman-root',
@@ -9,6 +9,29 @@ import {HeaderComponent} from "./shared/components/header/header.component";
   styleUrl: './app.component.scss',
   standalone: false
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'rentman-test-assignment';
+  data: StructuredTree | undefined;
+
+  private destroyed$ = new Subject<void>();
+  constructor(private readonly apiService: FiltersService) {
+  }
+
+  ngOnInit() {
+    this.loadMultiselectData();
+  }
+
+  ngOnDestroy() {
+    this.destroyed$.next();
+    this.destroyed$.complete();
+  }
+
+  private loadMultiselectData() {
+    this.apiService.loadMultiselectData()
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe(msData => {
+          this.data = this.apiService.getStructuredTree(msData);
+          console.log(this.data);
+        });
+  }
 }

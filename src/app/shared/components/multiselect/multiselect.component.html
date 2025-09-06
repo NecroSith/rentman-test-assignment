@@ -1,1 +1,7 @@
-<p>multiselect works!</p>
+<div style="display: flex; flex-direction: column;">
+    <div *ngFor="let folder of data" >
+        <label>{{ folder.label }}</label>
+        <input type="checkbox" [indeterminate]="true" />
+        <rman-multiselect *ngIf="folder.children.length" [data]="folder.children"></rman-multiselect>
+    </div>
+</div>

@@ -16,29 +16,45 @@ export class FiltersService {
     return this.http.get<MultiselectInputData>(`${this.baseUrl}/data/response.json`);
   }
 
-  public getStructuredData(data: MultiselectInputData) {
-    let result: any = [];
+  public getStructuredTree(data: MultiselectInputData) {
+    const { folders, items } = data;
+    const folderMap = new Map();
+    const roots: any = [];
 
-    data.folders.data.forEach(item => {
-      // Check if parent id is null, means it's a top level item
-      if (!item[2]) {
-        return {
-          id: item[0],
-          label: item[1],
-          children: []
-        };
-      }
+    // Create folder nodes and store them in the map
+    folders.data.forEach(folder => {
+      const [id, title, ] = folder;
+      const node = { id, label: title, children: [] };
+      folderMap.set(id, node);
+    });
 
-      const parent = result.find((parent: { id: number; }) => parent.id === item[2]);
+    // Establish parent-child relationships for folders
+    folders.data.forEach(folder => {
+      const [id, , parent_id] = folder;
+      const node = folderMap.get(id);
 
-      if (parent) {
-        parent.children.push({
-          id: item[0],
-          label: item[1]
-        });
+      if (parent_id === null) {
+        roots.push(node);
+      } else {
+        const parent = folderMap.get(parent_id);
+
+        if (parent) {
+          parent.children.push(node);
+        }
       }
     });
 
-    return result;
+    // Process items and add them to their respective folders
+    items.data.forEach(item => {
+      const [id, title, folder_id] = item;
+      const itemNode = { id, label: title, children: [] };
+      const parentFolder = folderMap.get(folder_id);
+
+      if (parentFolder) {
+        parentFolder.children.push(itemNode);
+      }
+    });
+
+    return roots;
   }
 }
