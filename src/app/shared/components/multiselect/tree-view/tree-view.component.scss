@@ -11,7 +11,7 @@
 
   &__item {
     @include mixins.flex(column, flex-start, center);
-    column-gap: 16px;
+    column-gap: variables.$spacing-default;
 
     .item {
       &__parent {

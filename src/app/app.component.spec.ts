@@ -3,6 +3,7 @@ import { AppComponent } from './app.component';
 import { SharedModule } from "./shared/shared.module";
 import {ProductsModule} from "./modules/products/products.module";
 import {RouterModule} from "@angular/router";
+import {provideHttpClient} from "@angular/common/http";
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -12,6 +13,9 @@ describe('AppComponent', () => {
           RouterModule,
           SharedModule,
           ProductsModule
+      ],
+      providers: [
+          provideHttpClient()
       ],
     }).compileComponents();
   });

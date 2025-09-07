@@ -1,9 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MultiselectComponent } from './multiselect.component';
 import {SharedModule} from "../../shared.module";
-import {HttpClientTestingModule, provideHttpClientTesting} from "@angular/common/http/testing";
-import {HttpClient} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
+import {provideHttpClient} from "@angular/common/http";
 
 describe('MultiselectComponent', () => {
   let component: MultiselectComponent;
@@ -16,6 +15,9 @@ describe('MultiselectComponent', () => {
           CommonModule,
           SharedModule,
       ],
+      providers: [
+        provideHttpClient()
+      ]
     })
     .compileComponents();
 

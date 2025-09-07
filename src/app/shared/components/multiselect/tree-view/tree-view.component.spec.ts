@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TreeViewComponent } from './tree-view.component';
 import {SharedModule} from "../../../shared.module";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {provideHttpClient} from "@angular/common/http";
 
 describe('TreeViewComponent', () => {
   let component: TreeViewComponent;
@@ -12,9 +12,10 @@ describe('TreeViewComponent', () => {
       declarations: [TreeViewComponent],
       imports: [
         SharedModule,
-        HttpClientTestingModule
       ],
-
+      providers: [
+        provideHttpClient()
+      ]
     })
     .compileComponents();
 
