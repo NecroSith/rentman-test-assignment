@@ -1,6 +1,8 @@
 @use '../../../styles/variables';
+@use "../../../styles/mixins";
 
 .header {
+  @include mixins.flex(row, center, center);
   position: fixed;
   top: 0;
   left: 0;
@@ -8,6 +10,6 @@
   background: #fff;
   width: 100%;
   padding: 10px 0;
-  border-bottom: 1px solid var(--gray-400);
-  text-align: center;
+  border-bottom: 1px solid variables.$border-color;
+  column-gap: variables.$spacing-default / 2;
 }

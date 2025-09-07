@@ -5,9 +5,9 @@
                         (itemExpansionChanged)="toggleExpand($event)">
         </rman-tree-view>
     </div>
-    <p>Selected items:
+    <p class="items-counter">Selected items:
         <ng-container *ngFor="let item of selectedItems">{{ item }}, </ng-container>
     </p>
-    <button (click)="clearSelection()">Clear</button>
+    <button class="btn-clear" (click)="clearSelection()">Clear selection</button>
 </ng-container>
 

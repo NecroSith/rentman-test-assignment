@@ -3,10 +3,10 @@
         <div class="item__parent" [ngClass]="{'expanded': folder.isExpanded}">
             <div (click)="toggle(folder)" class="parent__selector">
                 <input type="checkbox"
-                       class="item__checkbox"
+                       class="selector__checkbox"
                        [indeterminate]="folder.isIndeterminate"
                        [checked]="folder.isSelected"  />
-                <label>{{ folder.label }}</label>
+                <label class="selector__label">{{ folder.label }}</label>
             </div>
             <div class="parent__expander" (click)="toggleExpand(folder)">
                 <img ngSrc="/img/icons/chevron-up.svg"

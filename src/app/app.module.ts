@@ -5,6 +5,7 @@ import {RouterModule} from "@angular/router";
 import {BrowserModule} from "@angular/platform-browser";
 import {CommonModule} from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
+import {ProductsModule} from "./modules/products/products.module";
 
 @NgModule({
     imports: [
@@ -12,7 +13,8 @@ import { HttpClientModule } from "@angular/common/http";
         HttpClientModule,
         CommonModule,
         SharedModule,
-        RouterModule
+        RouterModule,
+        ProductsModule
     ],
     declarations: [
         AppComponent,

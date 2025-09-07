@@ -36,12 +36,9 @@ export class MultiselectComponent implements OnInit, OnDestroy {
   }
 
   public toggleExpand(itemToUpdate: TreeItem) {
-    console.log("here??")
     if (!this.data) {
       return;
     }
-
-    console.log('expand')
 
     this.toggleTreeItemExpand(itemToUpdate, this.data);
   }

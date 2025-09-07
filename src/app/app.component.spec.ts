@@ -1,10 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { SharedModule } from "./shared/shared.module";
+import {ProductsModule} from "./modules/products/products.module";
+import {RouterModule} from "@angular/router";
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      declarations: [AppComponent],
+      imports: [
+          RouterModule,
+          SharedModule,
+          ProductsModule
+      ],
     }).compileComponents();
   });
 
@@ -14,16 +22,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'rentman-test-assignment' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('rentman-test-assignment');
-  });
-
-  it('should render title', () => {
+  it('should render content panel', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, rentman-test-assignment');
+    expect(compiled.querySelector('div')?.textContent).toContain('Content');
   });
 });

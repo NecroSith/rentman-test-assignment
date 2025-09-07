@@ -1,4 +1,5 @@
 @use "../../../../styles/variables";
+@use "../../../../styles/mixins";
 
 :host {
   width: 100%;
@@ -6,31 +7,35 @@
 
 .tree-view {
   font-size: variables.$font-size-default;
+  padding-left: 12px;
 
   &__item {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    justify-content: center;
+    @include mixins.flex(column, flex-start, center);
     column-gap: 16px;
-    padding-left: 12px;
 
     .item {
       &__parent {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        @include mixins.flex(row, space-between, center);
         width: -webkit-fill-available;
         width: -moz-available;
         padding: 7px variables.$spacing-default;
+        transition: background-color 0.2s ease-in-out;
+
+        & + * {
+          display: none;
+        }
 
         &.expanded {
           & + * {
-            display: none;
+            display: block;
           }
 
           .parent__expander {
               transform: rotate(180deg);
+          }
+
+          .selector__label {
+            font-weight: 600;
           }
         }
 
@@ -44,27 +49,25 @@
 
         .parent {
           &__selector {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
+            @include mixins.flex(row, flex-start, center);
             column-gap: 10px;
             cursor: pointer;
             width: 100%;
+
+            .selector {
+              &__checkbox {
+                height: 18px;
+                width: 18px;
+                accent-color: variables.$primary-color;
+              }
+            }
           }
 
           &__expander {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            @include mixins.flex(row, center, center);
             transition: transform 0.2s ease-in-out;
           }
         }
-      }
-
-      &__checkbox {
-        height: 18px;
-        width: 18px;
-        accent-color: variables.$primary-color;
       }
     }
   }

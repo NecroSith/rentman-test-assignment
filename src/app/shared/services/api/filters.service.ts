@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {MultiselectInputData} from "../../models/multiselect.model";
+import {MultiselectInputData, StructuredTree} from "../../models/multiselect.model";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,6 @@ export class FiltersService {
     const folderMap = new Map();
     const roots: any = [];
 
-    // Create folder nodes and store them in the map
     folders.data.forEach(folder => {
       const [id, title, parent_id] = folder;
       const node = {
@@ -31,7 +30,7 @@ export class FiltersService {
         children: [],
         isSelected: false,
         isIndeterminate: false,
-        isExpanded: false,
+        isExpanded: true,
       };
 
       folderMap.set(id, node);
@@ -72,6 +71,28 @@ export class FiltersService {
       }
     });
 
-    return roots;
+    return this.getSortedTree(roots);
+  }
+
+  private getSortedTree(data: StructuredTree): StructuredTree {
+    if (!data || data.length === 0) {
+      return data;
+    }
+
+    const sortedData = [...data];
+
+    sortedData.sort((a, b) => {
+      if (a.label < b.label) return -1;
+      if (a.label > b.label) return 1;
+      return 0;
+    });
+
+    sortedData.forEach(node => {
+      if (node.children && node.children.length > 0) {
+        node.children = this.getSortedTree(node.children);
+      }
+    });
+
+    return sortedData;
   }
 }

@@ -1,0 +1,8 @@
+@use "variables";
+
+html, body {
+  box-sizing: border-box;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: variables.$font-size-default;
+}
+

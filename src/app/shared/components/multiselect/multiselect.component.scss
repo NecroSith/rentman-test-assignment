@@ -10,3 +10,22 @@
     padding-left: 0;
   }
 }
+
+.items-counter {
+  margin: variables.$spacing-default 0;
+}
+
+.btn-clear {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  padding: variables.$spacing-default / 2 variables.$spacing-default;
+  background-color: variables.$primary-color;
+  color: white;
+  border-radius: variables.$border-radius-default;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: darken(variables.$primary-color, 10%);
+  }
+}

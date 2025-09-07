@@ -1,18 +1,16 @@
 @use "styles/typography";
+@use "styles/mixins";
 
 .main {
+  @include mixins.flex(row, center, center);
   width: 100%;
   min-height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   padding: 1rem;
   box-sizing: inherit;
   position: relative;
 
   .content {
-    display: flex;
-    justify-content: space-around;
+    @include mixins.flex(row, space-around);
     width: 100%;
     max-width: 700px;
     margin-bottom: 3rem;
