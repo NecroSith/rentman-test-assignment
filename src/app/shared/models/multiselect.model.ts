@@ -9,7 +9,7 @@ export type MultiselectInputData = {
     };
 }
 
-export type DataArray = [number, string, number];
+export type DataArray = [number, string, number | null];
 
 export type StructuredTree = TreeItem[];
 
