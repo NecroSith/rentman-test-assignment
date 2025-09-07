@@ -11,10 +11,14 @@ export type MultiselectInputData = {
 
 export type DataArray = [number, string, number];
 
-export type StructuredTree = Node[];
+export type StructuredTree = TreeItem[];
 
-export type Node = {
+export type TreeItem = {
     id: number;
+    parentId: number | null;
     label: string;
-    children: Node[];
+    children: TreeItem[];
+    isSelected?: boolean;
+    isIndeterminate?: boolean;
+    isExpanded?: boolean;
 };

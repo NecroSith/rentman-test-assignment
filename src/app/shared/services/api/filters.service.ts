@@ -23,8 +23,17 @@ export class FiltersService {
 
     // Create folder nodes and store them in the map
     folders.data.forEach(folder => {
-      const [id, title, ] = folder;
-      const node = { id, label: title, children: [] };
+      const [id, title, parent_id] = folder;
+      const node = {
+        id,
+        parentId: parent_id,
+        label: title,
+        children: [],
+        isSelected: false,
+        isIndeterminate: false,
+        isExpanded: false,
+      };
+
       folderMap.set(id, node);
     });
 
@@ -47,7 +56,15 @@ export class FiltersService {
     // Process items and add them to their respective folders
     items.data.forEach(item => {
       const [id, title, folder_id] = item;
-      const itemNode = { id, label: title, children: [] };
+      const itemNode = {
+        id,
+        parentId: folder_id,
+        label: title,
+        children: [],
+        isSelected: false,
+        isIndeterminate: false,
+        isExpanded: false,
+      };
       const parentFolder = folderMap.get(folder_id);
 
       if (parentFolder) {

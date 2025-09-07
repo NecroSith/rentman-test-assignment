@@ -1,7 +1,8 @@
-<div style="display: flex; flex-direction: column;">
-    <div *ngFor="let folder of data" >
-        <label>{{ folder.label }}</label>
-        <input type="checkbox" [indeterminate]="true" />
-        <rman-multiselect *ngIf="folder.children.length" [data]="folder.children"></rman-multiselect>
-    </div>
-</div>
+<ng-container>
+    <rman-tree-view [data]="data" (toggleFn)="toggle($event)"></rman-tree-view>
+    <p>Selected items:
+        <ng-container *ngFor="let item of selectedItems">{{ item }}, </ng-container>
+    </p>
+    <button (click)="clearSelection()">Clear</button>
+</ng-container>
+
