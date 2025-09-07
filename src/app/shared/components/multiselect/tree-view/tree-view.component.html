@@ -1,0 +1,25 @@
+<div class="tree-view">
+    <div *ngFor="let folder of data" class="tree-view__item">
+        <div class="item__parent" [ngClass]="{'expanded': folder.isExpanded}">
+            <div (click)="toggle(folder)" class="parent__selector">
+                <input type="checkbox"
+                       class="item__checkbox"
+                       [indeterminate]="folder.isIndeterminate"
+                       [checked]="folder.isSelected"  />
+                <label>{{ folder.label }}</label>
+            </div>
+            <div class="parent__expander" (click)="toggleExpand(folder)">
+                <img ngSrc="/img/icons/chevron-up.svg"
+                     alt="chevron up"
+                     class="expand-icon"
+                     *ngIf="folder.children.length" height="5" width="8">
+            </div>
+        </div>
+
+        <rman-tree-view *ngIf="folder.children.length"
+                        [data]="folder.children"
+                        (itemSelectionChanged)="toggle($event)"
+                        (itemExpansionChanged)="toggleExpand($event)">
+        </rman-tree-view>
+    </div>
+</div>

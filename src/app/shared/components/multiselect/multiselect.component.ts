@@ -28,7 +28,22 @@ export class MultiselectComponent implements OnInit, OnDestroy {
   }
 
   public toggle(itemToUpdate: TreeItem) {
-    this.toggleTreeItem(itemToUpdate, this.data!);
+    if (!this.data) {
+      return;
+    }
+
+    this.toggleTreeItem(itemToUpdate, this.data);
+  }
+
+  public toggleExpand(itemToUpdate: TreeItem) {
+    console.log("here??")
+    if (!this.data) {
+      return;
+    }
+
+    console.log('expand')
+
+    this.toggleTreeItemExpand(itemToUpdate, this.data);
   }
 
   public clearSelection() {
@@ -51,23 +66,50 @@ export class MultiselectComponent implements OnInit, OnDestroy {
     }
   }
 
-  private updateSelectedItems(itemId: number) {
-    if (this.selectedItems.includes(itemId)) {
-      const index = this.selectedItems.indexOf(itemId);
+  private updateSelectedItems(item: TreeItem) {
+    if (item.isSelected && !item.isIndeterminate) {
+      this.selectedItems.push(item.id);
+    } else {
+      const index = this.selectedItems.indexOf(item.id);
       if (index !== -1) {
         this.selectedItems.splice(index, 1);
       }
-    } else {
-      this.selectedItems.push(itemId);
     }
   }
+
+  private toggleTreeItemExpand(itemToUpdate: TreeItem, tree: StructuredTree): void {
+    for (const item of tree) {
+      if (item.id === itemToUpdate.id && item.parentId === itemToUpdate.parentId) {
+        item.isExpanded = !item.isExpanded;
+
+        if (item.children && item.children.length > 0) {
+          this.updateChildrenExpand(item.children, item.isExpanded);
+        }
+      }
+
+      if (item.children && item.children.length > 0) {
+        this.toggleTreeItemExpand(itemToUpdate, item.children);
+      }
+    }
+  }
+
+  private updateChildrenExpand(children: TreeItem[], isExpanded: boolean): void {
+    for (const child of children) {
+      child.isExpanded = isExpanded;
+
+      if (child.children && child.children.length > 0) {
+        this.updateChildrenExpand(child.children, isExpanded);
+      }
+    }
+  }
+
 
   private toggleTreeItem(itemToUpdate: TreeItem, tree: StructuredTree): void {
     for (const item of tree) {
       if (item.id === itemToUpdate.id && item.parentId === itemToUpdate.parentId) {
         item.isSelected = !item.isSelected;
 
-        this.updateSelectedItems(item.id);
+        this.updateSelectedItems(item);
 
         if (item.children && item.children.length > 0) {
           this.updateChildrenSelection(item.children, item.isSelected);
@@ -113,7 +155,7 @@ export class MultiselectComponent implements OnInit, OnDestroy {
       parent.isSelected = false;
       parent.isIndeterminate = false;
 
-      this.updateSelectedItems(parent.id);
+      this.updateSelectedItems(parent);
     }
     // Some children selected or some children indeterminate: parent is indeterminate
     else {
@@ -127,7 +169,7 @@ export class MultiselectComponent implements OnInit, OnDestroy {
       child.isSelected = isSelected;
       child.isIndeterminate = false;
 
-      this.updateSelectedItems(child.id);
+      this.updateSelectedItems(child);
 
       if (child.children && child.children.length > 0) {
         this.updateChildrenSelection(child.children, isSelected);

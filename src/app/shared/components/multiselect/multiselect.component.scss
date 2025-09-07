@@ -1,2 +1,12 @@
+@use "../../../styles/variables";
 
+.tree-wrapper {
+  width: 275px;
+  display: block;
+  border: 1px solid variables.$border-color;
+  border-radius: variables.$border-radius-default;
 
+  & > ::ng-deep rman-tree-view > .tree-view {
+    padding-left: 0;
+  }
+}
