@@ -80,4 +80,5 @@ The project is naturally is not production ready and has some limitations due to
 ### UI
 
 - Add animations for collapse/expand
+- Add responsive design
 
